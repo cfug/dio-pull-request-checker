@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:github/github.dart';
+import 'package:github_action_core/github_action_core.dart';
 
 late GitHub github;
 
@@ -58,6 +59,9 @@ Future<ChangeFileContent> getChangeFileContentWithPullRequest({
   if (headContent == null || baseContent == null) {
     throw Exception('Cannot get head or base content');
   }
+
+  debug('head: $headContent');
+  debug('base: $baseContent');
 
   return ChangeFileContent(
     baseContent.decodeBase64(),
