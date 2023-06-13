@@ -1,5 +1,7 @@
 # action for check pr
 
+Check [dio-wiki](https://github.com/cfug/dio/wiki/Releasing-a-new-version-of-packages#before-start) to know changelog format.
+
 ## Setup action
 
 ```yaml
