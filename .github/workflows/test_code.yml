@@ -25,8 +25,8 @@ jobs:
     - name: Run dart
       run: dart run bin/main.dart
       shell: bash
+      env:
+        PERSON_TOKEN: ${{ secrets.PERSON_TOKEN }}
     - name: Run dart test
       run: dart test
       shell: bash
-      env:
-        PERSON_TOKEN: ${{ secrets.PERSON_TOKEN }}
