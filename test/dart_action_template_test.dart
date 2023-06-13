@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio_pull_request_checker/dio_pull_request_checker.dart';
 import 'package:dio_pull_request_checker/github.dart';
 import 'package:github/github.dart';
