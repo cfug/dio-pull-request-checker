@@ -31,6 +31,32 @@ class ChangeFileContent {
   const ChangeFileContent(this.before, this.after);
 }
 
+Future<PullRequest> getPullRequest({
+  required String owner,
+  required String repo,
+  required int number,
+}) {
+  return github.pullRequests.get(RepositorySlug(owner, repo), number);
+}
+
+Future<GitCommit?> getPullRequestHeadCommit({
+  required String owner,
+  required String repo,
+  required int prNumber,
+}) async {
+  final slug = RepositorySlug(owner, repo);
+  final pr = await github.pullRequests.get(slug, prNumber);
+  final sha = pr.head?.sha;
+
+  if (sha == null) {
+    return null;
+  }
+
+  final commit = await github.git.getCommit(slug, sha);
+
+  return commit;
+}
+
 Future<ChangeFileContent> getChangeFileContentWithPullRequest({
   required String owner,
   required String repo,
@@ -38,7 +64,11 @@ Future<ChangeFileContent> getChangeFileContentWithPullRequest({
   required String path,
 }) async {
   final slug = RepositorySlug(owner, repo);
-  final pr = await github.pullRequests.get(slug, number);
+  final pr = await getPullRequest(
+    owner: owner,
+    number: number,
+    repo: repo,
+  );
 
   final head = pr.head?.sha;
   final base = pr.base?.sha;

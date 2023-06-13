@@ -8,7 +8,7 @@ import 'package:github_action_core/github_action_core.dart';
 
 void injectGithub() {
   // Get the token from env
-  final token = Platform.environment['PERSON_TOKEN'];
+  final token = Platform.environment['WORKFLOW_TOKEN'];
   if (token == null) {
     setFailed('The input github-token is required');
   }
@@ -17,9 +17,8 @@ void injectGithub() {
 
 Future<void> main(List<String> arguments) async {
   // 1. Check if the current workflow run is a pull request
-  final pr = context.payload.pullRequest;
-  final number = pr?.number;
-  if (pr == null || number == null) {
+  final number = context.payload.pullRequest?.number;
+  if (number == null) {
     print('This is not a pull request, skipping');
     return;
   }
@@ -34,11 +33,24 @@ Future<void> main(List<String> arguments) async {
 
   final owner = repository.owner.login;
   final repo = repository.name;
-  final latestCommitIdShort = context.payload['after'];
-  final comment =
-      '''The PR applies invalid `CHANGELOG.md` (latest check @$latestCommitIdShort). Please correct it according to the [Wiki](https://github.com/cfug/dio/wiki/Releasing-a-new-version-of-packages#before-start).
 
-> PR 更改了 `CHANGELOG.md`（最新检查的提交 $latestCommitIdShort）但内容不符合格式。请参考 [Wiki](https://github.com/cfug/dio/wiki/Releasing-a-new-version-of-packages#before-start) 修改。
+  final pr = await getPullRequest(
+    owner: owner,
+    repo: repo,
+    number: number,
+  );
+
+  final headSha = pr.head?.sha;
+
+  if (headSha == null) {
+    info('Cannot get head ref, skipping');
+    return;
+  }
+
+  final comment =
+      '''The PR applies invalid `CHANGELOG.md` (latest check $headSha ). Please correct it according to the [Wiki](https://github.com/cfug/dio/wiki/Releasing-a-new-version-of-packages#before-start).
+
+> PR 更改了 `CHANGELOG.md`（最新检查的提交 $headSha）但内容不符合格式。请参考 [Wiki](https://github.com/cfug/dio/wiki/Releasing-a-new-version-of-packages#before-start) 修改。
 
 ''';
 
