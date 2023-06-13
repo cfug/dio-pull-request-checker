@@ -2,7 +2,12 @@ name: "Test dart code"
 
 on:
   pull_request:
-
+    types:
+      - ready_for_review
+      - reopened
+      - opened
+      - unlocked
+      - synchronize
 jobs:  
   test:
     if: github.event_name == 'pull_request' && github.event.pull_request.draft == false && github.event.pull_request.merged == false
