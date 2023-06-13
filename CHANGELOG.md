@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- support check pull requets
+- Support check pull requests changelog
 
 ## 0.0.1
 
