@@ -40,17 +40,17 @@ Future<void> main(List<String> arguments) async {
     number: number,
   );
 
-  final headRef = pr.head?.ref;
+  final headSha = pr.head?.sha;
 
-  if (headRef == null) {
+  if (headSha == null) {
     info('Cannot get head ref, skipping');
     return;
   }
 
   final comment =
-      '''The PR applies invalid `CHANGELOG.md` (latest check @$headRef ). Please correct it according to the [Wiki](https://github.com/cfug/dio/wiki/Releasing-a-new-version-of-packages#before-start).
+      '''The PR applies invalid `CHANGELOG.md` (latest check @$headSha ). Please correct it according to the [Wiki](https://github.com/cfug/dio/wiki/Releasing-a-new-version-of-packages#before-start).
 
-> PR 更改了 `CHANGELOG.md`（最新检查的提交 $headRef）但内容不符合格式。请参考 [Wiki](https://github.com/cfug/dio/wiki/Releasing-a-new-version-of-packages#before-start) 修改。
+> PR 更改了 `CHANGELOG.md`（最新检查的提交 $headSha）但内容不符合格式。请参考 [Wiki](https://github.com/cfug/dio/wiki/Releasing-a-new-version-of-packages#before-start) 修改。
 
 ''';
 
