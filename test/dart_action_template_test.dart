@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:dio_pull_request_checker/dio_pull_request_checker.dart';
+import 'package:dio_pull_request_checker/github.dart';
+import 'package:github/github.dart';
 import 'package:test/test.dart';
 
 const String _changelog = '''
@@ -98,5 +102,48 @@ void main() {
     expect(checkChangeLog(_changelog, _noPassChangelog), isNotNull);
     expect(checkChangeLog(_changelog, _noPassChangelog2), isNotNull);
     expect(checkChangeLog(_changelog, _noPassChangelog3), isNotNull);
+  });
+
+  test('Test GithubContentExt.', () {
+    final src1 =
+        'IyBDSEFOR0VMT0cKCiMjIDEuMC4wCgpzdXBwb3J0IGNoZWNrIHB1bGwgcmVx\ndWV0cwo=\n';
+
+    final dst1 = '''# CHANGELOG
+
+## 1.0.0
+
+support check pull requets
+''';
+
+    expect(src1.decodeHaveNewLineBase64(), dst1);
+
+    final src2 = 'IyMgMS4wLjAKCi0gSW5pdGlhbCB2ZXJzaW9uLgo=\n';
+    final dst2 = '''## 1.0.0
+
+- Initial version.
+''';
+
+    expect(src2.decodeHaveNewLineBase64(), dst2);
+  });
+
+  test('Get content', () async {
+    github = GitHub(auth: Authentication.anonymous());
+
+    final owner = 'dart-action';
+    final repo = 'dio-pull-request-checker';
+    final prNumber = 1;
+
+    final path = 'CHANGELOG.md';
+
+    final content = await getChangeFileContentWithPullRequest(
+      owner: owner,
+      repo: repo,
+      number: prNumber,
+      path: path,
+    );
+
+    final currentChangeContent = File(path).readAsStringSync();
+
+    expect(content.after, currentChangeContent);
   });
 }

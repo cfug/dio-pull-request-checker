@@ -64,14 +64,18 @@ Future<ChangeFileContent> getChangeFileContentWithPullRequest({
   debug('base: $baseContent');
 
   return ChangeFileContent(
-    baseContent.decodeBase64(),
-    headContent.decodeBase64(),
+    baseContent.decodeHaveNewLineBase64(),
+    headContent.decodeHaveNewLineBase64(),
   );
 }
 
-extension _StringExt on String {
+extension GithubContentExt on String {
   String decodeBase64() {
     final list = base64.decode(this);
     return utf8.decode(list);
+  }
+
+  String decodeHaveNewLineBase64() {
+    return replaceAll('\n', '').decodeBase64();
   }
 }
