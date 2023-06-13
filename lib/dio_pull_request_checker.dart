@@ -58,8 +58,16 @@ Map<String, String> getChangelogMap(String content) {
   var currentVersion = '';
 
   for (final line in lines) {
-    if (line.startsWith('## ')) {
+    if (line.startsWith('# ')) {
+      final version = line.substring(2).trim();
+      currentVersion = version;
+      result[version] = [];
+    } else if (line.startsWith('## ')) {
       final version = line.substring(3).trim();
+      currentVersion = version;
+      result[version] = [];
+    } else if (line.startsWith('### ')) {
+      final version = line.substring(4).trim();
       currentVersion = version;
       result[version] = [];
     } else {
