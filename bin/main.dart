@@ -8,7 +8,7 @@ import 'package:github_action_core/github_action_core.dart';
 
 void injectGithub() {
   // Get the token from env
-  final token = Platform.environment['PERSON_TOKEN'];
+  final token = Platform.environment['WORKFLOW_TOKEN'];
   if (token == null) {
     setFailed('The input github-token is required');
   }

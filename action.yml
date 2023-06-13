@@ -32,4 +32,4 @@ runs:
       run: dart run "${{ github.action_path }}/main.dart"
       shell: bash
       env:
-        PERSON_TOKEN: ${{ inputs.github-token }}
+        WORKFLOW_TOKEN: ${{ inputs.github-token }}
