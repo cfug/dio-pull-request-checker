@@ -142,7 +142,16 @@ support check pull requets
       path: path,
     );
 
-    final currentChangeContent = File(path).readAsStringSync();
+    final currentChangeContent = '''# CHANGELOG
+
+## Unreleased
+
+- support check pull requets
+
+## 0.0.1
+
+Init project
+''';
 
     expect(content.after, currentChangeContent);
   });
