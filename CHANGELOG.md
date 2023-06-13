@@ -2,8 +2,8 @@
 
 ## Unreleased
 
-*None.*
+- support check pull requets
 
-## 1.0.0
+## 0.0.1
 
-support check pull requets
+Init project
