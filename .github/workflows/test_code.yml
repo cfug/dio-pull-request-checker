@@ -1,7 +1,6 @@
 name: "Test dart code"
 
 on:
-  push:
   pull_request:
 
 jobs:  
