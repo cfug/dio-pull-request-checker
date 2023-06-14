@@ -4,6 +4,10 @@
 
 *None.*
 
+## 1.0.2
+
+- Change repo owner, change document
+
 ## 1.0.1
 
 - Support check pull requests changelog
