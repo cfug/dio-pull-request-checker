@@ -25,7 +25,5 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
 permissions:
-  contents: write
-  issues: write
   pull-requests: write
 ```
