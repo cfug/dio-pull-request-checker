@@ -21,11 +21,9 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.pull_request.draft == false && github.event.pull_request.merged == false
     runs-on: ubuntu-latest
     steps:
-    - uses: dart-action/dio-pull-request-checker@v1
+    - uses: cfug/dio-pull-request-checker@v1
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
 permissions:
-  contents: write
-  issues: write
   pull-requests: write
 ```
